@@ -2,38 +2,28 @@ require "sinatra"
 require "sinatra/reloader" if development?
 require "sinatra/json"
 require "json"
-require "pry" if development? || test?
+require "httparty"
 
 set :bind, '0.0.0.0'  # bind to all interfaces
 set :public_folder, File.join(File.dirname(__FILE__), "public")
 set :views, File.dirname(__FILE__) + "/views"
 
-def read_dishes
-  JSON.parse(File.read("dishes.json"))
-end
+
+response = HTTParty.get("https://api.nasa.gov/planetary/apod?api_key=HxDYIf5JHooKSuhxQzAWOpCbgcypK18XZICBcnI3")
+data = JSON.parse(response&.body || "{}")
 
 get "/" do
-  redirect "/dishes"
+  redirect "/home"
 end
 
-get "/dishes" do
+get "/home" do
   erb :home
 end
 
-# API ENDPOINTS
-get "/api/v1/dishes" do
-  # retrieve dishes from json
-  dishes = read_dishes
-
-  # set response type to json for clarity
-  content_type :json
-
-  # send back a json response of dishes
-  json dishes
+get "/api/nasa" do
+  json data
 end
 
-
-# SINATRA VIEWS ROUTES
 get "*" do
   erb :home
 end
