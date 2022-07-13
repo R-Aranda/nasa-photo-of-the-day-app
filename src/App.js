@@ -15,13 +15,9 @@ const App = (props) => {
   let copyright;
 
   if (!nasa.copyright) {
-    copyright = null;
+    copyright = <a href="https://www.nasa.gov/">NASA</a>;
   } else {
-    copyright = (
-      <div>
-        <strong>Copyright & Credit:</strong> {nasa.copyright}
-      </div>
-    );
+    copyright = nasa.copyright;
   }
 
   return (
@@ -29,7 +25,7 @@ const App = (props) => {
       <h1>Nasa's Astronomy Picture of the Day</h1>
       <img src={nasa.hdurl} />
       <h3>{nasa.title}</h3>
-      {copyright}
+      <strong>Copyright & Credit:</strong> {copyright}
       <p>"{nasa.explanation}"</p>
       <p>{nasa.date}</p>
     </div>
