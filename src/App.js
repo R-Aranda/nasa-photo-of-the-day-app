@@ -23,7 +23,12 @@ const App = (props) => {
   return (
     <div>
       <h1>Nasa's Astronomy Picture of the Day</h1>
-      <img src={nasa.hdurl} />
+      <a href={nasa.hdurl}>
+        <img
+          src={nasa.hdurl}
+          alt="Clicking on the picture will download the highest resolution version available."
+        />
+      </a>
       <h3>{nasa.title}</h3>
       <strong>Copyright & Credit:</strong> {copyright}
       <p>"{nasa.explanation}"</p>
